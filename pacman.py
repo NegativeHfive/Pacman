@@ -10,14 +10,14 @@ class Pacman(object):
         self.position = Vector2(200,400)
         self.directions = {STOP:Vector2(), UP:Vector2(0,-1), DOWN:Vector2(0,1), LEFT:Vector2(-1,0), RIGHT:Vector2(1,0)}
         self.direction = STOP
-        self.speed = 100 * TILEWITDH/16
+        self.speed = 100 * TILEWIDTH /16
         self.radius = 10
         self.color = YELLOW
         
     def update(self,dt):
         self.position += self.directions[self.direction]*self.speed*dt
         direction = self.getValidKey()
-        self.directions = direction
+        self.direction = direction
     
     def getValidKey(self):
         key_pressed = pygame.key.get_pressed()
