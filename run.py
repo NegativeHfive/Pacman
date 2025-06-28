@@ -10,7 +10,7 @@ class GameController(object):
         self.screen = pygame.display.set_mode((36*16,28*16))
         self.background = None
         self.clock = pygame.time.Clock()
-        self.pacman = Pacman()
+        #self.pacman = Pacman()
         
     def setBackground(self):
         self.background = pygame.surface.Surface((36*16,28*16)).convert()
@@ -20,7 +20,7 @@ class GameController(object):
         self.setBackground()
         self.nodes = NodeGroup()
         self.nodes.setupTestNodes()
-        self.pacman = Pacman(self.nodes.nodeList[0],2)
+        self.pacman = Pacman(self.nodes.nodeList[0])
     
     def update(self):
         dt = self.clock.tick(30) / 1000.0

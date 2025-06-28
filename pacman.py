@@ -9,7 +9,7 @@ class Pacman(object):
         self.name = PACMAN
         
         self.directions = {
-            UP:Vector2(0,1),
+            UP:Vector2(0,-1),
             DOWN:Vector2(0,1),
             LEFT:Vector2(-1,0),
             RIGHT:Vector2(1,0),
@@ -20,6 +20,7 @@ class Pacman(object):
         self.radius = 10
         self.color = YELLOW
         self.node= node
+        self.target = node
         self.setPosition()
     
     def setPosition(self):
