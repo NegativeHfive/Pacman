@@ -41,3 +41,6 @@ class NodeGroup(object):
                 if data[row][col] in self.nodeSymbols:
                     x, y = self.constructKey(col+xoffset, row+yoffset)
                     self.nodesLUT[(x,y)] = Node(x,y)
+    
+    def constructKey(self,x,y):
+        return x * TILEWIDTH, y * TILEHEIGHT
