@@ -44,3 +44,25 @@ class NodeGroup(object):
     
     def constructKey(self,x,y):
         return x * TILEWIDTH, y * TILEHEIGHT
+    
+    def connectHorizontally(self, data, xoffset=0, yoffset=0):
+        for row in list(range(data.shape[0])):
+            key = None
+            for col in list(range(data.shape[1])):
+                if data[row][col] in self.nodeSymbols:
+                    if key is None:
+                        key = self.constructKey(col+xoffset, row+yoffset)
+                    else:
+                        otherkey = self.constructKey(col+xoffset, row+yoffset)
+                        self.nodesLUT[key].neighbors[RIGHT] = self.nodesLUT[otherkey]
+                        self.nodesLUT[otherkey].neighbors[LEFT] = self.nodesLUT[key]
+                        key = otherkey
+                elif data[row][col] not in self.pathSymbols:
+                    key = None
+                    
+    def getNodeFromPixels(self, xpixel, ypixel):
+        if(xpixel, ypixel) in self.nodesLUT.keys():
+            return self.nodesLUT[(xpixel, ypixel)]
+        return None 
+    
+    
