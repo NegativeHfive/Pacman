@@ -31,6 +31,8 @@ class Pacman(object):
         direction = self.getValidKey()
         if self.overshotTarget():
             self.node = self.target
+            if self.node.neighbors[PORTAL] is not None:
+                self.node = self.node.neighbors[PORTAL]
             self.target = self.getNewTarget(direction)
             if self.target is not self.node:
                 self.direction = direction
