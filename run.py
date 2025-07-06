@@ -7,7 +7,7 @@ from nodes import NodeGroup
 class GameController(object):
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((36*16,28*16))
+        self.screen = pygame.display.set_mode((48*16,38*16))
         self.background = None
         self.clock = pygame.time.Clock()
         #self.pacman = Pacman()
