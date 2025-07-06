@@ -32,7 +32,7 @@ class NodeGroup(object):
         return np.loadtxt(textfile, dtype='<U1')
         
     def render(self,screen):
-        for node in self.nodeList:
+        for node in self.nodesLUT.values():
             node.render(screen)
     
     def createNodeTable(self,data, xoffset=0, yoffset=0):
@@ -60,9 +60,36 @@ class NodeGroup(object):
                 elif data[row][col] not in self.pathSymbols:
                     key = None
                     
+    def connectVertically(self,data,xoffset=0,yoffset=0):
+        dataT = data.transpose()
+        for col in list(range(data.shape[0])):
+            key = None
+            for row in list(range(dataT.shape[1])):
+                if dataT[col][row] in self.nodeSymbols:
+                    if key is None:
+                        key = self.constructKey(col+xoffset, row+yoffset)
+                    else:
+                        otherkey = self.constructKey(col+xoffset, row+yoffset)
+                        self.nodesLUT[key].neighbors[DOWN] = self.nodesLUT[otherkey]
+                        self.nodesLUT[otherkey].neighbors[UP] = self.nodesLUT[key]
+                        key = otherkey
+                elif dataT[col][row] not in self.pathSymbols:
+                    key = None
+                    
     def getNodeFromPixels(self, xpixel, ypixel):
         if(xpixel, ypixel) in self.nodesLUT.keys():
             return self.nodesLUT[(xpixel, ypixel)]
         return None 
+    
+    def getNodeFromTiles(self, col, row):
+        x, y = self.constructKey(col,row)
+        if(x,y) in self.nodesLUT.keys():
+            return self.nodesLUT[(x,y)]
+        return None
+    
+    def getStartTempNode(self):
+        nodes = list(self.nodesLUT.values())
+        return nodes[0]
+    
     
     
