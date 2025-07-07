@@ -3,6 +3,7 @@ from Vector import Vector2
 from contansts import * 
 import numpy as np
 
+
 class Node(object):
     def __init__(self,x,y):
         self.position = Vector2(x,y)
@@ -21,8 +22,8 @@ class NodeGroup(object):
     def __init__(self , level):
         self.level = level
         self.nodesLUT = {}
-        self.nodeSymbols = ['+']
-        self.pathSymbols = ['.']
+        self.nodeSymbols = ['+', 'P', 'n']
+        self.pathSymbols = ['.', '-', '/', 'p']
         data = self.readMazeFile(level)
         self.createNodeTable(data)
         self.connectHorizontally(data)
