@@ -8,8 +8,8 @@ class Entity(object):
     def __init__(self,node):
         self.name = None
         self.directions = {UP:Vector2(0,-1), DOWN:Vector2(0,1),
-                           LEFT:Vector2(-1,0), RIGHT:Vector2(1,0),STOP:Vector2()}
-        self.directions = STOP
+                            LEFT:Vector2(-1,0), RIGHT:Vector2(1,0),STOP:Vector2()}
+        self.direction = STOP
         self.setSpeed(100)
         self.radius = 10
         self.collideRadius = 5
@@ -67,11 +67,11 @@ class Entity(object):
             pygame.draw.circle(screen, self.color, p, self.radius)
     
     def update(self , dt):
-        self.position += self.directions[self.direction] * self.speed * dt
+        self.position += self.directions[self.direction]*self.speed*dt
         
         if self.overshotTarget():
             self.node = self.target
-            directions = self.validDirection()
+            directions = self.validDirections()
             direction = self.directionMethod(directions)
             if not self.disablePortal:
                 if self.node.neighbors[PORTAL] is not None:

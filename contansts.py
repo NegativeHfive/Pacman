@@ -24,3 +24,8 @@ WHITE = (255 , 255 , 255)
 RED = (255, 0, 0)
 
 PORTAL = 3
+
+SCATTER = 0
+CHASE = 1
+FREIGHT = 2
+SPAWN = 3
