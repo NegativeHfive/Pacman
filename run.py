@@ -14,7 +14,7 @@ class GameController(object):
         #self.pacman = Pacman()
         
     def setBackground(self):
-        self.background = pygame.surface.Surface((36*16,28*16)).convert()
+        self.background = pygame.surface.Surface((48*16,38*16)).convert()
         self.background.fill(BLACK)
         
     def startGame(self):

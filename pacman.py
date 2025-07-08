@@ -2,11 +2,14 @@ import pygame
 from pygame.locals import * 
 from Vector import Vector2
 from contansts import * 
+from entity import Entity
 
 
-class Pacman(object):
+class Pacman(Entity):
     def __init__(self, node):
+        Entity.__init__(self,node)
         self.name = PACMAN
+        self.color = YELLOW
         
         self.directions = {
             UP:Vector2(0,-1),
