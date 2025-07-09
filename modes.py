@@ -25,8 +25,13 @@ class MainMode(object):
         
         
 class ModeController(object):
-    def __init__(self , entity):
+    def __init__(self , ghost):
+        self.ghost = ghost
         self.timer = 0
         self.time = None
         self.mainmode = MainMode()
+        self.current = self.mainmode.mode
+        
+    def update(self, dt):
+        self.mainmode.update(dt)
         self.current = self.mainmode.mode

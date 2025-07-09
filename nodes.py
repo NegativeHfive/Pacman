@@ -98,6 +98,22 @@ class NodeGroup(object):
         if key1 in self.nodesLUT.keys() and key2 in self.nodesLUT.keys():
             self.nodesLUT[key1].neighbors[PORTAL] = self.nodesLUT[key2]
             self.nodesLUT[key2].neighbors[PORTAL] = self.nodesLUT[key1]
+            
     
+    def createHomeNodes(self, xoffset, yoffset):
+        homedata = np.array([['X', 'X', '+', 'X', 'X'], 
+                             ['X', 'X', '.', 'X', 'X'],
+                             ['+', 'X', '.', 'X', '+'],
+                             ['+', '.', '+', '.', '+'],
+                             ['+', 'X', 'X', 'X', '+']])
+        
+        self.createNodeTable(homedata,xoffset,yoffset)
+        self.connectHorizontally(homedata, xoffset, yoffset)
+        self.connectVertically(homedata, xoffset, yoffset)
+        self.homeKey = self.constructKey(xoffset+2, yoffset)
+        return self.homeKey
     
-    
+    def connectHomeNodes(self, homeKey, otherKey, direction):
+        key = self.constructKey(*otherKey)
+        self.nodesLUT[homeKey].neighbors[direction] = self.nodesLUT[key]
+        self.nodesLUT[key].neighbors[direction*-1] = self.nodesLUT[homeKey]
