@@ -28,6 +28,17 @@ class Pacman(Entity):
         self.target = node
         self.setPosition()
         self.collideRadius = 5
+        self.alive = True
+        
+    def reset(self):
+        Entity.reset(self)
+        self.direction = LEFT
+        self.setBetweenNodes(LEFT)
+        self.alive = True
+        
+    def die(self):
+        self.alive = False
+        self.direction = STOP
     
     def setPosition(self):
         self.position = self.node.position.copy()

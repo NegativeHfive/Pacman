@@ -54,6 +54,11 @@ class Ghost(Entity):
             self.setSpeed(150)
             self.directionMethod = self.goalDirection
             self.spawn()
+            
+    def reset(self):
+        Entity.reset(self)
+        self.points = 200
+        self.directionMethod = self.goalDirection
     
 class Blinky(Ghost):
     def __init__(self, node, pacman=None, blinky=None):
