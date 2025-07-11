@@ -18,6 +18,13 @@ class GameController(object):
         #self.pacman = Pacman()
         self.fruit = None
         self.pause = Pause(True)
+        self.level = 0
+        
+    def nextLevel(self):
+        self.showEntities()
+        self.level += 1
+        self.pause.paused = True
+        self.startGame()
         
     def setBackground(self):
         self.background = pygame.surface.Surface((48*16,38*16)).convert()
@@ -112,6 +119,9 @@ class GameController(object):
             self.pellets.pelletList.remove(pellet)
             if pellet.name == POWERPELLET:
                 self.ghosts.startFreight()
+            if self.pellets.isEmpty():
+                self.hideEntities()
+                self.pause.setPause(pauseTime=3, func=self.nextLevel)
         
 if __name__ == "__main__":
         game = GameController()
