@@ -11,6 +11,7 @@ class Pacman(Entity):
         self.name = PACMAN
         self.color = YELLOW
         self.direction = LEFT
+        self.setBetweenNodes(LEFT)
         
         self.directions = {
             UP:Vector2(0,-1),
