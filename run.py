@@ -26,9 +26,13 @@ class GameController(object):
         homeKey = self.nodes.createHomeNodes(11.5 , 14)
         self.nodes.connectHomeNodes(homeKey, (12,14), LEFT)
         self.nodes.connectHomeNodes(homeKey, (15,14), RIGHT)
-        self.pacman = Pacman(self.nodes.getStartTempNode())
+        self.pacman= Pacman(self.nodes.getNodeFromTiles(15, 26))
         self.pellets = PelletGroup("maze1.txt")
         self.ghosts = GhostGroup(self.nodes.getStartTempNode(), self.pacman)
+        self.ghosts.blinky.setStartNode(self.nodes.getNodeFromTiles(2+11.5, 0+14))
+        self.ghosts.pinky.setStartNode(self.nodes.getNodeFromTiles(2+11.5, 3+14))
+        self.ghosts.inky.setStartNode(self.nodes.getNodeFromTiles(0+11.5, 3+14))
+        self.ghosts.clyde.setStartNode(self.nodes.getNodeFromTiles(4+11.5, 3+14))
         self.ghosts.setSpawnNode(self.nodes.getNodeFromTiles(2+11.5, 3+14))
     
     def update(self):

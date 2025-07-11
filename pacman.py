@@ -10,6 +10,7 @@ class Pacman(Entity):
         Entity.__init__(self,node)
         self.name = PACMAN
         self.color = YELLOW
+        self.direction = LEFT
         
         self.directions = {
             UP:Vector2(0,-1),
