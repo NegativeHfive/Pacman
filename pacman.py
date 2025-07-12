@@ -3,6 +3,7 @@ from pygame.locals import *
 from Vector import Vector2
 from contansts import * 
 from entity import Entity
+from spirits import PacmanSprites
 
 
 class Pacman(Entity):
@@ -12,6 +13,7 @@ class Pacman(Entity):
         self.color = YELLOW
         self.direction = LEFT
         self.setBetweenNodes(LEFT)
+        self.spirits = PacmanSprites(self)
         
         self.directions = {
             UP:Vector2(0,-1),
