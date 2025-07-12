@@ -8,6 +8,7 @@ from pellets import PelletGroup
 from ghosts import GhostGroup
 from fruit import Fruit
 from pauser import Pause
+from text import TextGroup
 
 class GameController(object):
     def __init__(self):
@@ -20,6 +21,8 @@ class GameController(object):
         self.pause = Pause(True)
         self.level = 0
         self.lives = 5
+        self.score = 0
+        self.textGroup = TextGroup()
         
     def restartGame(self):
         self.lives = 5
@@ -27,6 +30,7 @@ class GameController(object):
         self.pause.paused = True
         self.fruit = None
         self.startGame()
+        self.textGroup.showText(READYTXT)
         
     def resetLevel(self):
         self.pause.paused = True
@@ -39,6 +43,7 @@ class GameController(object):
         self.level += 1
         self.pause.paused = True
         self.startGame()
+        self.textGroup.updateLevel(self.level)
         
     def setBackground(self):
         self.background = pygame.surface.Surface((48*16,38*16)).convert()
@@ -74,6 +79,7 @@ class GameController(object):
     
     def update(self):
         dt = self.clock.tick(30) / 1000.0
+        self.textGroup.update(dt)
         self.pellets.update(dt)
         if not self.pause.paused:
             self.pacman.update(dt)
@@ -89,12 +95,18 @@ class GameController(object):
         self.checkEvents()
         self.render()
         
+    def updateScore(self, points):
+        self.score += points
+        self.textGroup.updateScore(self.score)
+        
     def checkFruitEvents(self):
         if self.pellets.numEaten == 50 or self.pellets.numEaten == 140:
             if self.fruit is None:
                 self.fruit = Fruit(self.nodes.getNodeFromTiles(9,20))
         if self.fruit is not None:
             if self.pacman.collideCheck(self.fruit):
+                self.updateScore(self.fruit.points)
+                self.textGroup.addText(str(self.fruit.points), WHITE, self.fruit.position.x, self.fruit.position.y, 8, time=1)
                 self.fruit = None
             elif self.fruit.destroy:
                 self.fruit = None
@@ -105,6 +117,9 @@ class GameController(object):
                 if ghost.mode.current is FREIGHT:
                     self.pacman.visible = False
                     ghost.visible = False
+                    self.updateScore(ghost.points)
+                    self.textGroup.addText(str(ghost.points), WHITE, ghost.position.x, ghost.position.y , 8, time=1)
+                    self.ghosts.updatePoints()
                     self.pause.setPause(pauseTime=1, func=self.showEntities)
                     ghost.startSpawn()
                     self.nodes.allowHomeAccess(ghost)
@@ -114,6 +129,7 @@ class GameController(object):
                         self.pacman.die()
                         self.ghosts.hide()
                         if self.lives <= 0:
+                            self.textGroup.showText(GAMEOVERTXT)
                             self.pause.setPause(pauseTime=3, func=self.restartGame)
                         else:
                             self.pause.setPause(pauseTime=3, func=self.resetLevel)
@@ -134,9 +150,11 @@ class GameController(object):
                 if event.key == K_SPACE:
                     if self.pacman.alive:
                         self.pause.setPause(playerPaused=True)
-                    if not self.pause.paused:
-                        self.showEntities()
+                        if not self.pause.paused:
+                            self.textGroup.hideText()
+                            self.showEntities()
                     else:
+                        self.textGroup.showText(PAUSETXT)
                         self.hideEntities()
     
     def render(self):
@@ -147,12 +165,14 @@ class GameController(object):
             self.fruit.render(self.screen)
         self.pacman.render(self.screen)
         self.ghosts.render(self.screen)
+        self.textGroup.render(self.screen)
         pygame.display.update()
         
     def checkPelletEvents(self):
         pellet = self.pacman.eatPellets(self.pellets.pelletList)
         if pellet:
             self.pellets.numEaten += 1
+            self.updateScore(pellet.points)
             if self.pellets.numEaten == 30:
                 self.ghosts.inky.startNode.allowAccess(RIGHT, self.ghosts.inky)
             if self.pellets.numEaten == 70:
