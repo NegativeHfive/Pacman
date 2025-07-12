@@ -31,8 +31,9 @@ class Entity(object):
         
     def validDirection(self, direction):
         if direction is not STOP:
-            if self.node.neighbors[direction] is not None:
-                return True
+            if self.name in self.node.access[direction]:
+                if self.node.neighbors[direction] is not None:
+                 return True
         return False
     
     def getNewTarget(self, direction):
