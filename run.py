@@ -55,7 +55,7 @@ class GameController(object):
         
     def startGame(self):
         self.setBackground()
-        self.mazesprites = MazeSprites("maze1.txt")
+        self.mazesprites = MazeSprites("maze1.txt", "maze_rotation.txt")
         self.background = self.mazesprites.constructBackground(self.background, self.level%5)
         self.nodes = NodeGroup("maze1.txt")
         self.nodes.setPortalPair((0,17), (27,17))
@@ -166,7 +166,7 @@ class GameController(object):
     
     def render(self):
         self.screen.blit(self.background,(0,0))
-        self.nodes.render(self.screen)
+        #self.nodes.render(self.screen)
         self.pellets.render(self.screen)
         if self.fruit is not None:
             self.fruit.render(self.screen)
