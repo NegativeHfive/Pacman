@@ -46,6 +46,7 @@ class Pacman(Entity):
         self.position = self.node.position.copy()
         
     def update(self,dt):
+        self.spirits.update(dt)
         self.position += self.directions[self.direction]*self.speed*dt
         direction = self.getValidKey()
         if self.overshotTarget():
