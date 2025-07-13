@@ -10,6 +10,7 @@ from fruit import Fruit
 from pauser import Pause
 from text import TextGroup
 from spirits import LifeSprites
+from spirits import MazeSprites
 
 class GameController(object):
     def __init__(self):
@@ -54,6 +55,8 @@ class GameController(object):
         
     def startGame(self):
         self.setBackground()
+        self.mazesprites = MazeSprites("maze1.txt")
+        self.background = self.mazesprites.constructBackground(self.background, self.level%5)
         self.nodes = NodeGroup("maze1.txt")
         self.nodes.setPortalPair((0,17), (27,17))
         homeKey = self.nodes.createHomeNodes(11.5 , 14)
