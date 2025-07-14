@@ -88,13 +88,19 @@ class GameController(object):
         self.textGroup.update(dt)
         self.pellets.update(dt)
         if not self.pause.paused:
-            self.pacman.update(dt)
             self.ghosts.update(dt)
         if self.fruit is not None:
             self.fruit.update(dt)
         self.checkPelletEvents()
         self.checkGhostEvents()
         self.checkFruitEvents()
+        
+        if self.pacman.alive:
+            if not self.pause.paused:
+                self.pacman.update(dt)
+        else:
+            self.pacman.update(dt)
+        
         afterPauseMethod = self.pause.update(dt)
         if afterPauseMethod is not None:
             afterPauseMethod()
@@ -173,6 +179,7 @@ class GameController(object):
         self.pacman.render(self.screen)
         self.ghosts.render(self.screen)
         self.textGroup.render(self.screen)
+        
         for i in range(len(self.lifesprites.images)):
             x = self.lifesprites.images[i].get_width() * i
             y = SCREENHEIGHT - self.lifesprites.images[i].get_height()

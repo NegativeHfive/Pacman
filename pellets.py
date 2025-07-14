@@ -9,7 +9,7 @@ class Pellet(object):
         self.name = PELLET
         self.position = Vector2(column*TILEWIDTH, row*TILEHEIGHT)
         self.color = WHITE
-        self.radius = int(2 * TILEWIDTH/16)
+        self.radius = int(2 * TILEWIDTH / 16)
         self.collideRadius = int(2 * TILEWIDTH / 16)
         self.points = 10
         self.visible = True
