@@ -7,6 +7,7 @@ from modes import ModeController
 from spirits import GhostSprites
 
 
+
 class Ghost(Entity):
     def __init__(self, node, pacman=None, blinky=None):
         Entity.__init__(self, node)
@@ -20,6 +21,7 @@ class Ghost(Entity):
         self.homeNode = node
         
     def update(self, dt):
+        self.spirits.update(dt)
         self.mode.update(dt)
         if self.mode.current is SCATTER:
             self.scatter()

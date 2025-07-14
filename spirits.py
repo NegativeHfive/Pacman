@@ -9,7 +9,7 @@ BASETILEHEIGTH = 16
 
 class Spritesheet(object):
     def __init__(self):
-        self.sheet = pygame.image.load("spritesheet.png").convert()
+        self.sheet = pygame.image.load("spritesheet_nopink.png").convert()
         transcolor = self.sheet.get_at((0,0))
         self.sheet.set_colorkey(transcolor)
         width = int(self.sheet.get_width() / BASETILEWIDTH * TILEWIDTH)
@@ -75,6 +75,30 @@ class GhostSprites(Spritesheet):
     
     def getImage(self, x, y):
         return Spritesheet.getImage(self, x, y, 2*TILEWIDTH, 2*TILEHEIGHT)
+    
+    def update(self, dt):
+        x = self.x[self.entity.name]
+        if self.entity.mode.current in [SCATTER, CHASE]:
+            if self.entity.direction == LEFT:
+                self.entity.image = self.getImage(x, 8)
+            elif self.entity.direction == RIGHT:
+                self.entity.image = self.getImage(x, 10)
+            elif self.entity.direction == DOWN:
+                self.entity.image = self.getImage(x, 6)
+            elif self.entity.direction == UP:
+                self.entity.image = self.getImage(x, 4)
+        elif self.entity.mode.current == FREIGHT:
+            self.entity.image = self.getImage(10, 4)
+        elif self.entity.mode.current == SPAWN:
+            if self.entity.direction == LEFT:
+                self.entity.image = self.getImage(8, 8)
+            elif self.entity.direction == RIGHT:
+                self.entity.image = self.getImage(8, 10)
+            elif self.entity.direction == DOWN:
+                self.entity.image = self.getImage(8, 6)
+            elif self.entity.direction == UP:
+               self.entity.image = self.getImage(8, 4)
+
     
 class FruitSprites(Spritesheet):
     def __init__(self, entity):
