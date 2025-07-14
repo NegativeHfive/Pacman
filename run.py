@@ -91,6 +91,7 @@ class GameController(object):
             self.ghosts.update(dt)
         if self.fruit is not None:
             self.fruit.update(dt)
+            
         self.checkPelletEvents()
         self.checkGhostEvents()
         self.checkFruitEvents()
